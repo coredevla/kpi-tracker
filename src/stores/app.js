@@ -79,5 +79,20 @@ export const useAppStore = defineStore('app', () => {
     await bootstrap()
   }
 
-  return { ready, dark, bootstrap, loadData, toggleTheme, exportData, importData }
+  /** Vacía los stores de datos al cerrar sesión (evita ver datos del usuario anterior). */
+  function clearData() {
+    for (const s of [
+      useServiciosStore(),
+      usePersonalStore(),
+      useAsignacionesStore(),
+      useVentasStore(),
+      usePriStore(),
+      useUsuariosStore(),
+    ]) {
+      s.items = []
+      s.loaded = false
+    }
+  }
+
+  return { ready, dark, bootstrap, loadData, clearData, toggleTheme, exportData, importData }
 })

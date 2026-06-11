@@ -36,10 +36,11 @@ const displayName = computed(() => {
 })
 const rolLabel = computed(() => ROLE_LABEL[auth.rol] || '')
 
-function logout() {
-  auth.logout()
+async function logout() {
   open.value = false
-  router.replace({ name: 'login' })
+  await auth.logout()
+  app.clearData()
+  await router.replace({ name: 'login' })
 }
 
 function initials(name) {

@@ -148,6 +148,7 @@ create policy "all_usuarios" on usuarios for all to anon, authenticated using (t
 -- =====================================================================
 -- FASE B (paso 1) · Autenticación con Supabase Auth
 -- Requiere: Authentication → Providers → Email → desactivar "Confirm email".
+-- (Si está activo, usuarios creados desde la app quedan "Waiting for verification".)
 -- =====================================================================
 
 -- Perfil 1:1 con auth.users (guarda rol y persona enlazada).
@@ -171,15 +172,25 @@ create trigger trg_perfiles_upd before update on perfiles for each row execute f
 
 -- Crea automáticamente el perfil al registrarse un usuario en Auth.
 -- (rol por defecto 'representante'; al primer admin se le sube el rol a mano).
-create or replace function handle_new_user()
-returns trigger as $$
+create or replace function public.handle_new_user()
+returns trigger
+language plpgsql
+security definer
+set search_path = public
+as $$
 begin
-  insert into perfiles (id, username, email, rol, activo)
-  values (new.id, split_part(new.email, '@', 1), new.email, 'representante', true)
+  insert into public.perfiles (id, username, email, rol, activo)
+  values (
+    new.id,
+    split_part(coalesce(new.email, ''), '@', 1),
+    new.email,
+    'representante',
+    true
+  )
   on conflict (id) do nothing;
   return new;
 end;
-$$ language plpgsql security definer;
+$$;
 
 drop trigger if exists on_auth_user_created on auth.users;
 create trigger on_auth_user_created
@@ -195,6 +206,16 @@ create policy "perfil_propio_select" on perfiles for select to authenticated usi
 
 drop policy if exists "perfil_propio_update" on perfiles;
 create policy "perfil_propio_update" on perfiles for update to authenticated using (auth.uid() = id) with check (auth.uid() = id);
+
+-- Permite al trigger insertar perfiles al crear usuarios en Auth.
+drop policy if exists "perfiles_insert_auth" on perfiles;
+create policy "perfiles_insert_auth" on perfiles
+  for insert
+  to authenticated, service_role
+  with check (true);
+
+grant insert on public.perfiles to supabase_auth_admin;
+grant usage on schema public to supabase_auth_admin;
 
 -- ---- Crear el primer admin (manual, una vez) ----
 -- 1) Authentication → Users → Add user → email + contraseña (marca "Auto Confirm User").
