@@ -1,0 +1,137 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    color-scheme: light dark;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply min-h-screen bg-gradient-to-br from-amber-100 via-sky-100 to-brand-200 bg-fixed text-slate-700 antialiased transition-colors duration-500;
+    font-family: 'Outfit', system-ui, sans-serif;
+  }
+
+  .dark body {
+    @apply bg-slate-950 bg-none text-slate-100;
+  }
+
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-slate-300/60 dark:bg-slate-700/60;
+  }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-brand-400/70;
+  }
+}
+
+@layer components {
+  /* Superficie tipo glass empresarial */
+  .glass {
+    @apply border border-white/60 bg-white/55 backdrop-blur-xl;
+  }
+  .dark .glass {
+    @apply border-white/10 bg-slate-900/70;
+  }
+
+  .card-surface {
+    @apply rounded-2xl border border-white/60 bg-white/65 shadow-card backdrop-blur-md transition-all duration-300;
+  }
+  .dark .card-surface {
+    @apply border-slate-800 bg-slate-900/80;
+  }
+
+  .btn {
+    @apply inline-flex select-none items-center justify-center gap-2 rounded-xl px-4 py-2.5 text-sm font-semibold transition-all duration-200 active:scale-95 disabled:cursor-not-allowed disabled:opacity-50;
+  }
+  .btn-primary {
+    @apply bg-gradient-to-r from-brand-600 to-accent-500 text-white shadow-lg shadow-brand-600/25 hover:shadow-glow hover:brightness-110;
+  }
+  .btn-ghost {
+    @apply border border-white/70 bg-white/70 text-slate-700 hover:border-brand-300 hover:text-brand-600 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-200 dark:hover:border-brand-500;
+  }
+  .btn-danger {
+    @apply bg-rose-500/10 text-rose-600 hover:bg-rose-500 hover:text-white dark:text-rose-400;
+  }
+
+  .input {
+    @apply w-full rounded-xl border border-white/70 bg-white/75 px-3.5 py-2.5 text-sm text-slate-800 outline-none transition focus:border-brand-400 focus:ring-4 focus:ring-brand-500/15 dark:border-slate-700 dark:bg-slate-800 dark:text-slate-100;
+  }
+  .label {
+    @apply mb-1.5 block text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400;
+  }
+
+  .badge {
+    @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold;
+  }
+
+  /* Tarjeta 3D con seguimiento del mouse */
+  .card-3d {
+    transform-style: preserve-3d;
+    transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg));
+    transition: transform 0.18s ease-out;
+    will-change: transform;
+  }
+  .card-3d__layer {
+    transform: translateZ(40px);
+  }
+  .card-3d__glow {
+    background: radial-gradient(
+      600px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(59, 144, 246, 0.18),
+      transparent 40%
+    );
+  }
+}
+
+@layer utilities {
+  .reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity 0.7s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+  .reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .text-gradient {
+    @apply bg-gradient-to-r from-brand-500 via-brand-400 to-accent-400 bg-clip-text text-transparent;
+  }
+}
+
+/* Transiciones de página de Vue Router */
+.page-enter-active,
+.page-leave-active {
+  transition: opacity 0.35s ease, transform 0.35s ease;
+}
+.page-enter-from {
+  opacity: 0;
+  transform: translateY(14px);
+}
+.page-leave-to {
+  opacity: 0;
+  transform: translateY(-10px);
+}
+
+/* Transición de listas (modales / filas) */
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.3s ease;
+}
+.list-enter-from,
+.list-leave-to {
+  opacity: 0;
+  transform: translateY(-8px);
+}

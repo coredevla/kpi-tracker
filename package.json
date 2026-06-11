@@ -1,0 +1,29 @@
+{
+  "name": "kpi-tracker",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "description": "SPA para trazabilidad y cálculo de metas KPI de vendedoras de servicios",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.108.1",
+    "chart.js": "^4.4.7",
+    "lucide-vue-next": "^0.468.0",
+    "pinia": "^2.3.0",
+    "vue": "^3.5.13",
+    "vue-chartjs": "^5.3.2",
+    "vue-router": "^4.5.0",
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-vue": "^5.2.1",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "vite": "^6.0.5"
+  }
+}
