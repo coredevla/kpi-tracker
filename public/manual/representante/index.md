@@ -6,14 +6,16 @@ Guía para iniciar sesión, registrar ventas en la **Bitácora** y consultar tus
 
 ## 1. Acceso
 
-**URL:** [Iniciar sesión](/#/login)
+**URL:** https://coredevla.github.io/kpi-tracker/#/login
+
+También puedes usar el enlace **Iniciar sesión** dentro de la app (`/#/login`).
 
 ![Pantalla de login](imagenes/01-login.svg)
 
 1. Ingresa el **correo** y la **contraseña** que te entregó el administrador.
 2. Pulsa **Entrar**.
 
-> Si no puedes entrar, pide al admin que verifique tu correo (sin typos) o que resetee tu contraseña.
+> Si no puedes entrar, contacta al administrador de tu equipo o escribe a **core.devlabs@outlook.com** (soporte de plataforma · Cherry Solutions).
 
 ---
 
@@ -122,13 +124,17 @@ Icono de salida (puerta) en la barra superior.
 
 ## Tarjeta rápida (guardar en el teléfono)
 
+Copia este bloque en una nota del móvil (sustituye correo y clave por los tuyos):
+
 ```
 KPI Tracker
-Login: [URL de la app]/#/login
-Correo: [tu correo]
-Clave: [tu clave]
+Login: https://coredevla.github.io/kpi-tracker/#/login
+Correo: [tu correo asignado]
+Clave: [tu contraseña]
 
 Bitácora → + Nuevo → Servicio, Cantidad, Monto, Tipo → Guardar
 ```
 
-Contacto admin: *(completar)*
+**Soporte plataforma:** core.devlabs@outlook.com · Powered By Cherry Solutions
+
+> Para incidencias de metas, asignaciones o accesos internos, contacta primero al administrador de tu área.

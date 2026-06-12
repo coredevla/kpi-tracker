@@ -4,6 +4,11 @@ Todas las modificaciones notables de **KPI Tracker** se documentan en este archi
 
 El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/) y el proyecto usa [SemVer](https://semver.org/lang/es/).
 
+## [1.2.1] - 2026-06-12
+
+### Cambiado
+- Manuales representante y admin: URL de producción (`coredevla.github.io/kpi-tracker`), tarjeta rápida sin placeholders y contacto **core.devlabs@outlook.com** (Cherry Solutions).
+
 ## [1.2.0] - 2026-06-11
 
 ### Añadido

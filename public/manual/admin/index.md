@@ -6,7 +6,9 @@ Guía para configurar personal, metas, usuarios y operación completa del sistem
 
 ## 1. Acceso
 
-**URL:** [Iniciar sesión](/#/login)
+**URL:** https://coredevla.github.io/kpi-tracker/#/login
+
+También puedes usar el enlace **Iniciar sesión** dentro de la app (`/#/login`).
 
 ![Pantalla de login](imagenes/01-login.svg)
 
@@ -14,6 +16,8 @@ Guía para configurar personal, metas, usuarios y operación completa del sistem
 2. Pulsa **Entrar**.
 
 > Las credenciales se crean en Supabase (Authentication → Users). No uses la contraseña del panel supabase.com.
+
+**Soporte plataforma (Cherry Solutions):** core.devlabs@outlook.com
 
 ---
 
