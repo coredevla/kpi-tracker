@@ -75,6 +75,75 @@
     @apply inline-flex items-center gap-1 rounded-full px-2.5 py-1 text-xs font-semibold;
   }
 
+  /* Manual de usuario renderizado desde markdown */
+  .manual-prose {
+    @apply max-w-none text-slate-700 dark:text-slate-200;
+  }
+  .manual-prose h1 {
+    @apply mb-6 text-2xl font-extrabold tracking-tight text-slate-800 dark:text-slate-100;
+  }
+  .manual-prose h2 {
+    @apply mb-4 mt-10 border-b border-slate-200/80 pb-2 text-xl font-bold text-slate-800 dark:border-slate-700 dark:text-slate-100;
+  }
+  .manual-prose h3 {
+    @apply mb-3 mt-6 text-lg font-semibold text-brand-700 dark:text-brand-400;
+  }
+  .manual-prose p {
+    @apply mb-4 leading-relaxed text-slate-600 dark:text-slate-300;
+  }
+  .manual-prose ul,
+  .manual-prose ol {
+    @apply mb-4 ml-5 list-outside space-y-1.5 text-slate-600 dark:text-slate-300;
+  }
+  .manual-prose ul {
+    @apply list-disc;
+  }
+  .manual-prose ol {
+    @apply list-decimal;
+  }
+  .manual-prose li {
+    @apply leading-relaxed;
+  }
+  .manual-prose a {
+    @apply font-medium text-brand-600 underline decoration-brand-500/40 underline-offset-2 hover:text-brand-700 dark:text-brand-400;
+  }
+  .manual-prose strong {
+    @apply font-semibold text-slate-800 dark:text-slate-100;
+  }
+  .manual-prose hr {
+    @apply my-8 border-slate-200/80 dark:border-slate-700;
+  }
+  .manual-prose blockquote {
+    @apply my-4 rounded-xl border-l-4 border-brand-500/60 bg-brand-500/5 px-4 py-3 text-sm text-slate-600 dark:bg-brand-500/10 dark:text-slate-300;
+  }
+  .manual-prose code {
+    @apply rounded-md bg-slate-100 px-1.5 py-0.5 text-sm text-slate-800 dark:bg-slate-800 dark:text-slate-100;
+  }
+  .manual-prose pre {
+    @apply my-4 overflow-x-auto rounded-xl border border-slate-200/80 bg-slate-100/80 p-4 text-sm dark:border-slate-700 dark:bg-slate-900/80;
+  }
+  .manual-prose pre code {
+    @apply bg-transparent p-0;
+  }
+  .manual-prose table {
+    @apply my-6 w-full overflow-hidden rounded-xl border border-slate-200/80 text-sm dark:border-slate-700;
+  }
+  .manual-prose thead {
+    @apply bg-slate-100/90 text-left dark:bg-slate-800/90;
+  }
+  .manual-prose th {
+    @apply px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-slate-500 dark:text-slate-400;
+  }
+  .manual-prose td {
+    @apply border-t border-slate-200/80 px-4 py-2.5 text-slate-600 dark:border-slate-700 dark:text-slate-300;
+  }
+  .manual-prose img {
+    @apply my-6 w-full rounded-2xl border border-white/60 shadow-card dark:border-slate-700;
+  }
+  .manual-prose input[type='checkbox'] {
+    @apply mr-2 accent-brand-500;
+  }
+
   /* Tarjeta 3D con seguimiento del mouse */
   .card-3d {
     transform-style: preserve-3d;

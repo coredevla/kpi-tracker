@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="960" height="540" viewBox="0 0 960 540" role="img" aria-label="02-navbar-admin">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fef3c7"/>
+      <stop offset="50%" style="stop-color:#e0f2fe"/>
+      <stop offset="100%" style="stop-color:#bfdbfe"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="540" fill="url(#bg)"/>
+  <rect x="24" y="24" width="912" height="492" rx="16" fill="none" stroke="#94a3b8" stroke-width="2" stroke-dasharray="8 6"/>
+  <text x="480" y="248" text-anchor="middle" font-family="system-ui,sans-serif" font-size="22" font-weight="600" fill="#475569">02-navbar-admin</text>
+  <text x="480" y="284" text-anchor="middle" font-family="system-ui,sans-serif" font-size="14" fill="#64748b">Placeholder — reemplazar por captura real</text>
+  <text x="480" y="310" text-anchor="middle" font-family="system-ui,sans-serif" font-size="12" fill="#94a3b8">Mismo nombre de archivo (.png recomendado)</text>
+</svg>

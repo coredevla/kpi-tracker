@@ -7,7 +7,7 @@ import { usePersonalStore } from '@/stores/personal'
 import { ROLE_LABEL } from '@/data/roles'
 import {
   LayoutDashboard, NotebookPen, BarChart3, Users, Boxes, Link2, UserCog,
-  Moon, Sun, Menu, X, Activity, LogOut,
+  Moon, Sun, Menu, X, Activity, LogOut, BookOpen, BookMarked,
 } from 'lucide-vue-next'
 
 const app = useAppStore()
@@ -25,6 +25,12 @@ const allLinks = [
   { to: '/asignaciones', label: 'Asignaciones', icon: Link2, adminOnly: true },
   { to: '/usuarios', label: 'Usuarios', icon: UserCog, adminOnly: true },
 ]
+
+const helpLinks = computed(() => {
+  const items = [{ to: '/manual', label: 'Ayuda', icon: BookOpen }]
+  if (auth.isAdmin) items.push({ to: '/manual/admin', label: 'Manual admin', icon: BookMarked, adminOnly: true })
+  return items.filter((l) => !l.adminOnly || auth.isAdmin)
+})
 
 const links = computed(() => allLinks.filter((l) => !l.adminOnly || auth.isAdmin))
 
@@ -69,6 +75,17 @@ function initials(name) {
             class="group flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-slate-600 transition hover:bg-brand-500/10 hover:text-brand-600 dark:text-slate-300 dark:hover:text-brand-400"
             active-class="!bg-brand-500/15 !text-brand-600 dark:!text-brand-400"
             exact-active-class="!bg-brand-500/15 !text-brand-600 dark:!text-brand-400"
+          >
+            <component :is="l.icon" class="h-4 w-4" />
+            {{ l.label }}
+          </RouterLink>
+          <span class="mx-1 hidden h-5 w-px bg-slate-300/80 dark:bg-slate-600 lg:inline-block" aria-hidden="true" />
+          <RouterLink
+            v-for="l in helpLinks"
+            :key="'help-' + l.to"
+            :to="l.to"
+            class="group flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium text-slate-500 transition hover:bg-accent-500/10 hover:text-accent-600 dark:text-slate-400 dark:hover:text-accent-400"
+            active-class="!bg-accent-500/15 !text-accent-600 dark:!text-accent-400"
           >
             <component :is="l.icon" class="h-4 w-4" />
             {{ l.label }}
@@ -118,6 +135,18 @@ function initials(name) {
             :to="l.to"
             class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-600 hover:bg-brand-500/10 dark:text-slate-300"
             active-class="!text-brand-600 dark:!text-brand-400"
+            @click="open = false"
+          >
+            <component :is="l.icon" class="h-4 w-4" />
+            {{ l.label }}
+          </RouterLink>
+          <div class="my-2 border-t border-slate-200/70 dark:border-slate-700/70" />
+          <RouterLink
+            v-for="l in helpLinks"
+            :key="'m-help-' + l.to"
+            :to="l.to"
+            class="flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-500 hover:bg-accent-500/10 dark:text-slate-400"
+            active-class="!text-accent-600 dark:!text-accent-400"
             @click="open = false"
           >
             <component :is="l.icon" class="h-4 w-4" />

@@ -57,6 +57,17 @@ Arquitectura con **capa de repositorios abstracta** (`src/data/repositories/`) q
 
 Cambiar de backend no requiere tocar componentes ni stores: solo la variable de entorno. Las credenciales se configuran en `.env.local` (ver `.env.example`).
 
+## 📖 Manuales de usuario (en la app)
+
+Tras iniciar sesión, usa **Ayuda** en el menú (manual representante) o **Manual admin** (solo administradores).
+
+Los archivos fuente están en `public/manual/`:
+
+- `public/manual/representante/index.md` + `imagenes/` (7 capturas)
+- `public/manual/admin/index.md` + `imagenes/` (14 capturas)
+
+Sustituye cada `.svg` placeholder por tu captura real (`.png` recomendado) y actualiza las extensiones en `index.md`. Regenerar placeholders: `npm run manual:placeholders`.
+
 ## 📦 Publicar en GitHub Pages
 
 1. Sube el proyecto a un repositorio de GitHub (rama `main`).

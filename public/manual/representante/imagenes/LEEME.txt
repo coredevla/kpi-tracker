@@ -1,0 +1,2 @@
+Sustituye cada .svg por tu captura real manteniendo el nombre base (ej. 01-login.png).
+Luego en index.md busca ".svg" y reemplaza por ".png".

@@ -7,12 +7,14 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "manual:placeholders": "node scripts/gen-manual-placeholders.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.108.1",
     "chart.js": "^4.4.7",
     "lucide-vue-next": "^0.468.0",
+    "marked": "^15.0.12",
     "pinia": "^2.3.0",
     "vue": "^3.5.13",
     "vue-chartjs": "^5.3.2",
