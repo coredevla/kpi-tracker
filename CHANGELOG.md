@@ -21,6 +21,10 @@ El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/) y e
 ### Cambiado
 - Versión del producto elevada a **1.2.0** (SemVer de tres segmentos).
 
+### Corregido
+- Alta de usuarios: validación previa por correo duplicado o cuenta inactiva, con mensajes claros (Auth `user_already_exists` y perfil `activo = false`).
+- Manual admin § 3.4: procedimiento desde **Usuarios → Ver inactivos → Activar** cuando el correo ya existe.
+
 ## [1.1.0] - 2026-06-10
 
 ### Añadido

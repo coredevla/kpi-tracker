@@ -39,6 +39,16 @@ export const useUsuariosStore = defineStore('usuarios', () => {
   async function create({ email, password, rol = ROLES.REPRESENTANTE, personalId = null }) {
     const correo = (email || '').trim().toLowerCase()
 
+    const existente = items.value.find((u) => (u.email || '').toLowerCase() === correo)
+    if (existente) {
+      if (existente.activo === false) {
+        throw new Error(
+          'Este correo ya tiene una cuenta inactiva. En Usuarios, marca "Ver inactivos", pulsa Activar y edita rol/persona si hace falta.',
+        )
+      }
+      throw new Error('Ya existe un usuario con ese correo.')
+    }
+
     // 1) Alta en Auth con cliente aislado (no toca la sesión del admin).
     const { data, error } = await supabaseSignup.auth.signUp({ email: correo, password })
     if (error) throw error
