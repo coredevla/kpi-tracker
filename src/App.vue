@@ -3,16 +3,19 @@ import { onMounted, computed } from 'vue'
 import { RouterView, useRoute } from 'vue-router'
 import AppNavbar from '@/components/AppNavbar.vue'
 import ToastHost from '@/components/ToastHost.vue'
+import PlatformUpdateOverlay from '@/components/PlatformUpdateOverlay.vue'
 import { useAppStore } from '@/stores/app'
 
 const app = useAppStore()
 const route = useRoute()
 const blank = computed(() => route.meta?.layout === 'blank')
+const appVersion = import.meta.env.VITE_APP_VERSION
 
 onMounted(() => app.bootstrap())
 </script>
 
 <template>
+  <PlatformUpdateOverlay />
   <ToastHost />
 
   <!-- Layout en blanco (login): sin navbar ni footer -->
@@ -46,7 +49,9 @@ onMounted(() => app.bootstrap())
     </main>
 
     <footer class="mt-12 border-t border-slate-200/70 py-6 text-center text-sm text-slate-400 dark:border-slate-800/70">
-      KPI Tracker · Trazabilidad de metas comerciales
+      KPI Tracker · v{{ appVersion }}
+      <span class="mx-2">·</span>
+      Powered By Cherry Solutions
     </footer>
   </div>
 </template>

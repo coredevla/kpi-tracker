@@ -1,11 +1,12 @@
 {
   "name": "kpi-tracker",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.2.0",
   "type": "module",
   "description": "SPA para trazabilidad y cálculo de metas KPI de vendedoras de servicios",
   "scripts": {
     "dev": "vite",
+    "prebuild": "node scripts/write-version-json.mjs",
     "build": "vite build",
     "preview": "vite preview",
     "manual:placeholders": "node scripts/gen-manual-placeholders.mjs"

@@ -2,31 +2,47 @@
 
 Todas las modificaciones notables de **KPI Tracker** se documentan en este archivo.
 
-## [No publicado]
+El formato sigue [Keep a Changelog](https://keepachangelog.com/es-ES/1.0.0/) y el proyecto usa [SemVer](https://semver.org/lang/es/).
+
+## [1.2.0] - 2026-06-11
 
 ### Añadido
-- **Driver de datos Supabase (Fase A)**: nueva clase `SupabaseRepository` con el mismo contrato que
-  `LocalStorageRepository`, seleccionable con `VITE_DATA_DRIVER=supabase`. Incluye `supabaseClient.js`,
-  esquema SQL (`supabase/schema.sql`) y `.env.example`. Ningún store ni componente requirió cambios.
-- **PRI como KPI transversal de ingresos**: nuevo indicador calculado automáticamente desde la
-  bitácora como `Σ(monto)`, independiente del catálogo de servicios.
-- **Campo `monto`** (RD$, 2 decimales, `>= 0`) en cada registro de bitácora.
-- **Campo `tipoGestion`** (`venta` / `reclamacion`) en bitácora; ambas suman al PRI.
-- **Metas PRI por persona/periodo** (colección `metasPri`), editables por admin en *Asignaciones*.
-  El objetivo global se deriva como suma de los individuales.
-- **Tarjeta "PRI · Ingresos"** independiente en el Dashboard, sensible a filtros y a la gobernanza
-  de datos (representante ve solo lo suyo).
-- **Reportes ampliados**: tabla por persona/servicio con cantidad, monto y % de contribución al PRI,
-  fila de totales, filtro por tipo de gestión y métricas PRI (objetivo, logrado, excedente, %).
-- **Exportación a Excel** (`.xlsx`) de los reportes, incluyendo monto, tipo de gestión y métricas PRI.
-- `money()` en `src/utils/format.js` para formato `RD$` con 2 decimales.
-- Documentación: `docs/PRI-KPI.md` (especificación) y `docs/KPI-CALCULOS.md` (todas las fórmulas).
+- Tabla **`app_config`** en Supabase: mantenimiento, mensaje personalizable y `clientVersion` desplegada.
+- **`version.json`** generado en cada build (`prebuild`) con versión SemVer y timestamp.
+- **`VITE_APP_VERSION`** inyectada en el bundle desde `package.json`.
+- Capa de plataforma (SOLID):
+  - `src/services/platformConfig.js` — lectura de config remota y versión publicada.
+  - `src/composables/usePlatformUpdate.js` — polling y estados de mantenimiento/actualización.
+  - `src/components/PlatformUpdateOverlay.vue` — overlay bloqueante (mantenimiento) y aviso de nueva versión.
+- Footer con versión visible y crédito **Powered By Cherry Solutions** (app y login).
+- CI: activar/desactivar mantenimiento y sincronizar `clientVersion` en cada deploy (requiere `SUPABASE_SERVICE_ROLE_KEY`).
+- Documentación: [`docs/APP_CONFIG.md`](docs/APP_CONFIG.md), [`docs/VERSIONING.md`](docs/VERSIONING.md), [`docs/ROADMAP.md`](docs/ROADMAP.md).
 
 ### Cambiado
-- **Renombrado el producto de "KPI Telecom" a "KPI Tracker"** en toda la interfaz y metadatos.
-- **Namespace de `localStorage` unificado** bajo el prefijo `kpi-tracker:` (sesión, tema y datos).
-- Versión del respaldo (export/import) elevada a `2`, incluyendo las nuevas colecciones y campos.
+- Versión del producto elevada a **1.2.0** (SemVer de tres segmentos).
 
-### Notas
-- Fase de desarrollo: no se incluye migración de datos legacy. Al cambiar el esquema/namespace se
-  parte de un `localStorage` limpio (resiembra automática del admin y los servicios).
+## [1.1.0] - 2026-06-10
+
+### Añadido
+- Manuales de usuario integrados en la app (`/manual`, `/manual/admin`) con Markdown, placeholders SVG y enlaces **Ayuda** en la navbar.
+- Script `npm run manual:placeholders` para regenerar capturas placeholder.
+
+## [1.0.1] - 2026-06-09
+
+### Corregido
+- Logout: `await auth.logout()` antes de navegar y limpieza de datos en store.
+- Trigger `handle_new_user` y políticas RLS en `perfiles` para creación de usuarios vía Auth.
+
+## [1.0.0] - 2026-06-08
+
+### Añadido
+- Release inicial **KPI Tracker**: Dashboard, Bitácora, Reportes, Personal, Servicios, Asignaciones, Usuarios.
+- **PRI** como KPI transversal de ingresos (`Σ monto` en RD$), metas PRI por persona, export Excel.
+- Backend **Supabase** (Postgres + Auth + RLS), login email/contraseña, roles admin/representante.
+- Driver de datos abstracto (`local` / `supabase`), despliegue GitHub Pages, tema claro/oscuro.
+- Documentación de cálculos: [`docs/PRI-KPI.md`](docs/PRI-KPI.md), [`docs/KPI-CALCULOS.md`](docs/KPI-CALCULOS.md).
+
+[1.2.0]: https://github.com/coredevla/kpi-tracker/compare/v1.1.0...v1.2.0
+[1.1.0]: https://github.com/coredevla/kpi-tracker/compare/v1.0.1...v1.1.0
+[1.0.1]: https://github.com/coredevla/kpi-tracker/compare/v1.0.0...v1.0.1
+[1.0.0]: https://github.com/coredevla/kpi-tracker/releases/tag/v1.0.0

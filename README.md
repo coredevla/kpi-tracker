@@ -76,6 +76,22 @@ Sustituye cada `.svg` placeholder por tu captura real (`.png` recomendado) y act
 
 > La app usa *hash history* (`/#/ruta`), por lo que funciona en GitHub Pages sin errores 404 al refrescar.
 
+### Secrets de GitHub Actions
+
+| Secret | Uso |
+|--------|-----|
+| `VITE_SUPABASE_URL` | URL del proyecto Supabase (build) |
+| `VITE_SUPABASE_ANON_KEY` | Publishable key (build) |
+| `SUPABASE_SERVICE_ROLE_KEY` | Toggle de mantenimiento y sync de `clientVersion` en deploy (**solo CI**) |
+
+Si falta `SUPABASE_SERVICE_ROLE_KEY`, el deploy sigue pero no activa el overlay de mantenimiento automático. Ver [`docs/APP_CONFIG.md`](docs/APP_CONFIG.md).
+
+## 🔄 Versión y actualizaciones
+
+- Versión SemVer en `package.json`; footer muestra `vX.Y.Z` y **Powered By Cherry Solutions**.
+- Tras un deploy, los usuarios con la app abierta ven un aviso para recargar cuando hay versión nueva.
+- Detalle: [`docs/VERSIONING.md`](docs/VERSIONING.md) · Config plataforma: [`docs/APP_CONFIG.md`](docs/APP_CONFIG.md) · Roadmap: [`docs/ROADMAP.md`](docs/ROADMAP.md)
+
 ## 📐 Cálculos KPI
 
 Por servicio y periodo (semana laboral Lun–Sáb por defecto):
@@ -109,8 +125,9 @@ Por servicio y periodo (semana laboral Lun–Sáb por defecto):
 ```
 src/
 ├── assets/main.css          # Tailwind + estilos/animaciones
-├── components/              # Card3D, KpiCard, StatCard, ProgressRing, BarChart, modal, navbar
-├── composables/useKpi.js    # cálculos KPI reactivos
+├── components/              # Card3D, KpiCard, PlatformUpdateOverlay, navbar, ...
+├── composables/             # useKpi, usePlatformUpdate, useManual, ...
+├── services/                # platformConfig (config remota y version.json)
 ├── data/
 │   ├── seedServicios.js     # 15 servicios precargados
 │   ├── supabaseClient.js    # cliente Supabase (Auth + datos)

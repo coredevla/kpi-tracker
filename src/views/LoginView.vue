@@ -9,6 +9,7 @@ const auth = useAuthStore()
 const app = useAppStore()
 const router = useRouter()
 const route = useRoute()
+const appVersion = import.meta.env.VITE_APP_VERSION
 
 const email = ref('')
 const password = ref('')
@@ -91,5 +92,9 @@ async function submit() {
         </button>
       </form>
     </div>
+
+    <p class="absolute bottom-6 text-center text-xs text-slate-400">
+      v{{ appVersion }} · Powered By Cherry Solutions
+    </p>
   </div>
 </template>
