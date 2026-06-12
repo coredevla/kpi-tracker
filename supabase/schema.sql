@@ -288,3 +288,32 @@ create policy "ventas_scope" on ventas for all to authenticated
 drop policy if exists "all_usuarios" on usuarios;
 drop policy if exists "usuarios_admin" on usuarios;
 create policy "usuarios_admin" on usuarios for all to authenticated using (es_admin()) with check (es_admin());
+
+-- =====================================================================
+-- Configuración de plataforma (app_config)
+-- Mantenimiento, versión desplegada y futuros ajustes globales de la app.
+-- Lectura pública (anon) para mostrar overlay antes del login.
+-- Escritura: admin autenticado o service_role (CI/CD).
+-- =====================================================================
+create table if not exists app_config (
+  id text primary key default 'default',
+  maintenance boolean default false,
+  "maintenanceMessage" text default 'Estamos actualizando la plataforma. Vuelve en unos minutos.',
+  "clientVersion" text,
+  "updatedAt" timestamptz default now()
+);
+
+insert into app_config (id, maintenance, "maintenanceMessage", "clientVersion")
+values ('default', false, 'Estamos actualizando la plataforma. Vuelve en unos minutos.', '1.2.0')
+on conflict (id) do nothing;
+
+drop trigger if exists trg_app_config_upd on app_config;
+create trigger trg_app_config_upd before update on app_config for each row execute function set_updated_at();
+
+alter table app_config enable row level security;
+
+drop policy if exists "app_config_read" on app_config;
+create policy "app_config_read" on app_config for select to anon, authenticated using (true);
+
+drop policy if exists "app_config_write" on app_config;
+create policy "app_config_write" on app_config for all to authenticated using (es_admin()) with check (es_admin());

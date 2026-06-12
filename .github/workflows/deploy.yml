@@ -19,19 +19,40 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
+      - id: pkg
+        run: echo "version=$(node -p "JSON.parse(require('fs').readFileSync('package.json','utf8')).version")" >> "$GITHUB_OUTPUT"
+
+      - name: Activar mantenimiento en Supabase
+        env:
+          SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+        run: |
+          if [ -z "$SERVICE_KEY" ] || [ -z "$SUPABASE_URL" ]; then
+            echo "::warning::SUPABASE_SERVICE_ROLE_KEY o VITE_SUPABASE_URL no configurados; se omite mantenimiento en deploy."
+            exit 0
+          fi
+          curl -sS -f -X PATCH "$SUPABASE_URL/rest/v1/app_config?id=eq.default" \
+            -H "apikey: $SERVICE_KEY" \
+            -H "Authorization: Bearer $SERVICE_KEY" \
+            -H "Content-Type: application/json" \
+            -H "Prefer: return=minimal" \
+            -d '{"maintenance":true}'
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: npm
+
       - run: npm ci
-      # base = /<nombre-del-repo>/ para que los assets carguen en GitHub Pages.
-      # Las VITE_* se incrustan en build: deben existir como Secrets del repo.
+
       - run: npm run build
         env:
           GH_PAGES_BASE: /${{ github.event.repository.name }}/
           VITE_DATA_DRIVER: supabase
           VITE_SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
           VITE_SUPABASE_ANON_KEY: ${{ secrets.VITE_SUPABASE_ANON_KEY }}
+
       - uses: actions/upload-pages-artifact@v3
         with:
           path: dist
@@ -45,3 +66,25 @@ jobs:
     steps:
       - id: deployment
         uses: actions/deploy-pages@v4
+
+      - uses: actions/checkout@v4
+
+      - id: pkg
+        run: echo "version=$(node -p "JSON.parse(require('fs').readFileSync('package.json','utf8')).version")" >> "$GITHUB_OUTPUT"
+
+      - name: Desactivar mantenimiento y registrar versión
+        env:
+          SUPABASE_URL: ${{ secrets.VITE_SUPABASE_URL }}
+          SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_ROLE_KEY }}
+          VERSION: ${{ steps.pkg.outputs.version }}
+        run: |
+          if [ -z "$SERVICE_KEY" ] || [ -z "$SUPABASE_URL" ]; then
+            echo "::warning::SUPABASE_SERVICE_ROLE_KEY o VITE_SUPABASE_URL no configurados; app_config no actualizado."
+            exit 0
+          fi
+          curl -sS -f -X PATCH "$SUPABASE_URL/rest/v1/app_config?id=eq.default" \
+            -H "apikey: $SERVICE_KEY" \
+            -H "Authorization: Bearer $SERVICE_KEY" \
+            -H "Content-Type: application/json" \
+            -H "Prefer: return=minimal" \
+            -d "{\"maintenance\":false,\"clientVersion\":\"$VERSION\"}"
