@@ -88,6 +88,29 @@ Personal → Asignaciones (+ PRI) → Usuarios → entrega credenciales
 - No puedes desactivarte a ti mismo (badge **tú**).
 - Reset de contraseña ajena: **Supabase → Authentication → Users**.
 
+### 3.4 Error al crear usuario («correo ya registrado» o cuenta inactiva)
+
+Si al pulsar **Crear usuario** aparece un mensaje como *«Ya existe un usuario con ese correo»* o *«Este correo ya tiene una cuenta inactiva…»*, **no intentes crearlo de nuevo** con el mismo correo. La cuenta ya existe en el sistema (a veces quedó **inactiva** tras un intento anterior o porque alguien la desactivó).
+
+**Qué hacer desde la pantalla Usuarios (sin Supabase):**
+
+1. **Menú → Usuarios**.
+2. Marca la casilla **Ver inactivos** (arriba a la derecha de la lista).
+3. Busca el correo en la tabla. Si la fila aparece atenuada y el badge dice **Inactivo**, ese es el usuario.
+4. Pulsa el botón **Activar** (icono de encendido) en esa fila.
+5. Si hace falta ajustar **rol** o **persona enlazada**, pulsa **Editar** (lápiz), corrige y guarda.
+6. Entrega las credenciales. Si no recuerda la contraseña: **Supabase → Authentication → Users** → usuario → reset / recovery.
+
+**Cuándo revisar Supabase (solo si sigue fallando):**
+
+| Revisar | Dónde | Qué buscar |
+|---------|--------|------------|
+| ¿Existe el correo? | Authentication → Users | Mismo email que intentas crear |
+| ¿Perfil enlazado? | SQL Editor (opcional) | Fila en `perfiles` con ese email, rol y `personalId` |
+| Confirm email | Authentication → Providers → Email | Debe estar **desactivado** |
+
+> El log de Postgres `schema_migrations does not exist` **no** indica este problema; ignóralo para altas de usuario.
+
 ---
 
 ## 4. Servicios (KPI)
@@ -174,7 +197,8 @@ Icono de salida en la barra superior → vuelves al login.
 | Usuario no entra | Verificar correo en Auth; reset password en Supabase |
 | Dashboard en cero | Generar asignaciones del mes |
 | PRI en cero | Definir meta PRI + montos en bitácora |
-| Error al crear usuario en Auth | Re-ejecutar `supabase/schema.sql` (trigger perfiles) |
+| «No se pudo guardar» / correo ya existe | Ver **§ 3.4**: Usuarios → Ver inactivos → Activar → Editar si hace falta |
+| Error al crear usuario en Auth (trigger) | Re-ejecutar `supabase/schema.sql` (trigger perfiles) |
 | Email "Waiting for verification" | Desactivar Confirm email en Supabase |
 
 ---
